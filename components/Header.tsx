@@ -63,7 +63,6 @@ export default function Header() {
             <span className="text-white text-base font-bold">CodeXpace</span>
           </Link>
 
-          {/* Navigation Links */}
           <div className="hidden md:flex items-center space-x-6">
             <Link
               href="/"
