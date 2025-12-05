@@ -117,7 +117,6 @@ export default function Services() {
                   "0 2px 8px rgba(220, 38, 38, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.03)"
               }}
             >
-              <div className="text-4xl mb-4">{service.icon}</div>
               <h3 className="text-lg font-bold text-white mb-3 leading-tight">
                 {service.title}
               </h3>
