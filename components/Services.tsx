@@ -8,49 +8,61 @@ const services = [
     // icon: "💻",
     title: "Web Development",
     slug: "web-development",
-    description: "Robust architecture for seamless digital experiences.",
+    description:
+      "Your one-stop shop for stellar web applications, built with the latest technologies.",
     cta: "Discover Our Development Approach"
   },
   {
     // icon: "📱",
     title: "Mobile App Development",
     slug: "mobile-app-development",
-    description: "Mobile-first solutions for any market.",
+    description:
+      "Secure, scalable, and innovative mobile apps that deliver results.",
     cta: "Start Your Mobile App Journey"
   },
   {
     // icon: "✅",
     title: "Software Testing",
     slug: "software-testing",
-    description: "QA that ensures speed, quality, and reliability.",
+    description:
+      "Speed up your software journey and mitigate risk with our full-cycle software testing service.",
     cta: "Ensure Quality"
   },
   {
     // icon: "⚙️",
     title: "Custom Software Development",
     slug: "custom-software-development",
-    description: "Bespoke solutions for your unique business challenges.",
+    description:
+      "From concept to execution - every line of code is designed to optimize your business processes and drive measurable ROI.",
     cta: "Explore Custom Solutions"
   },
   {
     // icon: "🧠",
     title: "AI & Machine Learning Development",
     slug: "ai-machine-learning-development",
-    description: "Unlock business intelligence and automation.",
+    description: "Your business — now intelligent.",
     cta: "See AI in Action"
+  },
+  {
+    // icon: "✨",
+    title: "UI/UX Designing",
+    slug: "ui-ux-designing",
+    description: "User-centered UI/UX design services",
+    cta: "Explore Design Services"
   },
   {
     // icon: "☁️",
     title: "Devops and Cloud",
     slug: "devops-cloud-services",
-    description: "Faster releases, stable infrastructure, lower costs.",
+    description: "Cloud that delivers. DevOps that empowers.",
     cta: "Optimize with DevOps"
   },
   {
     // icon: "🏢",
     title: "SAAS Development",
     slug: "saas-development",
-    description: "Scalable software-as-a-service solutions for modern businesses.",
+    description:
+      "End-to-end innovative SaaS software development services that are scalable, secure, and user-centric.",
     cta: "Explore SAAS Solutions"
   },
   {
@@ -64,42 +76,40 @@ const services = [
     // icon: "🎨",
     title: "Graphic Designing",
     slug: "graphic-designing",
-    description: "Creative visual solutions that make your brand stand out.",
+    description:
+      "Transform your digital user experience through our intuitive and visually appealing designing services.",
     cta: "See Our Designs"
   },
-  {
-    // icon: "✨",
-    title: "UI/UX Designing",
-    slug: "ui-ux-designing",
-    description: "User-centered design that creates exceptional experiences.",
-    cta: "Explore Design Services"
-  },
+
   {
     // icon: "💼",
     title: "IT Consultation",
     slug: "it-consultation",
-    description: "Expert guidance to transform your technology strategy.",
+    description: "Consulting that works — even when you’re offline.",
     cta: "Get Consultation"
   },
   {
     // icon: "📲",
     title: "Enterprise Mobility Solutions",
     slug: "enterprise-mobility-solutions",
-    description: "Mobile solutions that empower your enterprise workforce.",
+    description: "Mobility that accelerates efficiency.",
     cta: "Discover Mobility Solutions"
   },
   {
     // icon: "⛓️",
     title: "Blockchain",
     slug: "blockchain-development",
-    description: "Secure, scalable decentralized apps and platforms.",
+    description: "Trust, transparency, and transactions—redefined.",
     cta: "Explore Blockchain"
   }
 ];
 
 export default function Services() {
   const [visibleCards, setVisibleCards] = useState<Set<number>>(new Set());
+  const [showAll, setShowAll] = useState(false);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const displayedServices = showAll ? services : services.slice(0, 6);
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
@@ -128,7 +138,7 @@ export default function Services() {
     return () => {
       observers.forEach((observer) => observer.disconnect());
     };
-  }, []);
+  }, [showAll]);
 
   return (
     <section className="py-20 bg-black relative">
@@ -141,7 +151,7 @@ export default function Services() {
           to
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service, index) => (
+          {displayedServices.map((service, index) => (
             <div
               key={index}
               ref={(el: any) => (cardRefs.current[index] = el)}
@@ -185,6 +195,16 @@ export default function Services() {
             </div>
           ))}
         </div>
+        {!showAll && services.length > 6 && (
+          <div className="flex justify-center mt-12">
+            <button
+              onClick={() => setShowAll(true)}
+              className="px-8 py-3 bg-transparent border border-red-500/60 text-red-400 rounded-lg font-medium hover:bg-red-500/10 hover:border-red-500 transition-all duration-300"
+            >
+              Show more
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

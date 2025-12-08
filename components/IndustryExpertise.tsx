@@ -21,23 +21,23 @@ const industries = [
 
   {
     number: "02",
-    title: "Banking & Fintech",
+    title: "Fintech & Banking",
     description:
-      "Our expertise spans digital banking apps, payment gateways, blockchain solutions, lending platforms, and custom fintech software that drive financial innovation.",
+      "We specialize in digital banking and fintech solutions, including mobile banking apps, secure payment gateways, blockchain platforms, lending solutions, and custom financial software designed to drive innovation and streamline financial services.",
     image: bankingImage
   },
   {
     number: "03",
     title: "Retail & E-commerce",
     description:
-      "From e-commerce websites to inventory management systems, CRM, ERP solutions, and AI-based communication tools, we power modern retail operations.",
+      "From e-commerce platforms to inventory management, CRM, ERP systems, and AI-powered communication tools, we enable seamless and modern retail operations.",
     image: ecommerceImage
   },
   {
     number: "04",
     title: "Healthcare",
     description:
-      "We develop cutting-edge healthcare solutions including EHR/EMR systems, telemedicine applications, and patient engagement platforms that improve care delivery and patient outcomes.",
+      "We develop advanced healthcare software solutions, including EHR/EMR systems, telemedicine applications, and patient engagement platforms. Our technology enhances healthcare delivery, streamlines hospital operations, and improves patient outcomes.",
     image: healthcareImage
   },
 
@@ -45,7 +45,7 @@ const industries = [
     number: "05",
     title: "Travel & Hospitality",
     description:
-      "We create custom booking engines, hotel management systems, and travel applications with seamless integration to GDS, payment gateways, and airline ticketing platforms.",
+      "We deliver custom travel and hospitality software solutions, including hotel management systems, booking engines, and travel apps with seamless GDS, payment gateway, and airline ticketing integrations. Our platforms streamline operations and enhance traveler experiences.",
     image: travelImage
   }
 ];
@@ -126,7 +126,7 @@ export default function IndustryExpertise() {
                       }`}
                       style={{
                         width: "480px", // custom width
-                        height: "340px" // custom height
+                        height: "260px" // custom height - reduced
                         // objectFit: "cover"
                       }}
                     >
@@ -138,7 +138,7 @@ export default function IndustryExpertise() {
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
                         style={{
                           width: "480px", // custom width
-                          height: "340px", // custom height
+                          height: "260px", // custom height - reduced
                           objectFit: "cover"
                         }}
                       />

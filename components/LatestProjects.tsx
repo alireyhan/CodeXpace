@@ -17,8 +17,7 @@ const projects = [
   {
     id: "Yunuak",
     name: "Yunuak",
-    description:
-      "A powerful document collaboration platform that combines documents, spreadsheets, and applications into one unified workspace. We delivered a seamless user experience with real-time collaboration, advanced automation, and intuitive design that transforms how teams work together.",
+    description: `Yunuak is a next-gen enterprise solutions company empowering organizations with digital transformation, process engineering, and cloud-based business tools. Our platforms deliver workflow automation, real-time analytics, and cross-device accessibility. YUNUAK helps businesses achieve operational efficiency, scalability, and smarter decision-making.`,
     image: codaImage,
     type: "Productivity"
   },
@@ -26,10 +25,44 @@ const projects = [
     id: "Forward-Thinking-Fitness",
     name: "Forward Thinking Fitness",
     description:
-      "An immersive entertainment platform bringing the best of drama and pop culture to audiences worldwide. We built a streaming solution with personalized recommendations, social features, and seamless playback across all devices, creating an engaging viewing experience.",
+      "Forward Fitness Thinking is a comprehensive wellness and fitness platform enabling users to track menstrual cycles, habits, and nutrition, while earning rewards. The platform offers personalized workout plans, real-time performance insights, and seamless multi-device integration. Users experience a fully personalized, engaging, and results-driven health journey.",
     image: dramaPopImage,
     type: "Entertainment"
   },
+
+  {
+    id: "Liberty91",
+    name: "Liberty91",
+    description:
+      "Liberty91 is an AI-powered threat intelligence platform that analyzes real-time cybersecurity data tailored to your organization. It monitors news, dark-web feeds, and vulnerability reports, delivering instant alerts and actionable insights. Liberty91 enables proactive threat detection, risk reduction, and faster cybersecurity response.",
+    image: mahbubiImage,
+    type: "Social"
+  },
+  {
+    id: "Low-Coder",
+    name: "Low Coder",
+    description:
+      "Low Coder is a modern low-code development platform that enables businesses to build applications quickly with minimal coding expertise. The platform provides drag-and-drop interfaces, automation tools, and multi-device integration. The result is faster app deployment, reduced development costs, and scalable digital solutions.",
+    image: zedImage,
+    type: "Developer Tools"
+  },
+  {
+    id: "Luminary-Health",
+    name: "Luminary Health",
+    description:
+      "Luminary Health is an innovative digital health platform empowering users and providers with personalized healthcare solutions and wellness management tools. We built a system offering telemedicine access, health tracking, and seamless multi-device integration. The result is accessible, data-driven, and patient-centric healthcare for better outcomes.",
+    image: snoonuImage,
+    type: "Logistics"
+  },
+  {
+    id: "Spectra-Solar",
+    name: "Spectra Solar",
+    description:
+      "Spectra Solar delivers clean, renewable solar energy solutions for businesses and homes. We design and deploy scalable solar installations, integrate smart energy management systems, and monitor performance to maximize energy savings. The result is reliable solar power, reduced carbon footprint, and long-term sustainability.",
+    image: roadTrippersImage,
+    type: "Travel"
+  },
+
   {
     id: "Hammers-Tounges",
     name: "Hammers & Tounges",
@@ -39,34 +72,11 @@ const projects = [
     type: "Healthcare"
   },
   {
-    id: "Liberty91",
-    name: "Liberty91",
-    description:
-      "A modern social platform designed to connect communities and foster meaningful relationships. We created an engaging user experience with real-time messaging, content sharing, and community features that bring people together in innovative ways.",
-    image: mahbubiImage,
-    type: "Social"
-  },
-  {
-    id: "Spectra-Solar",
-    name: "Spectra Solar",
-    description:
-      "The ultimate road trip planning platform that helps travelers discover amazing places along their route. We built an intuitive mapping system with route optimization, point-of-interest discovery, and trip planning tools that make every journey unforgettable.",
-    image: roadTrippersImage,
-    type: "Travel"
-  },
-  {
-    id: "Luminary-Health",
-    name: "Luminary Health",
-    description:
-      "A comprehensive delivery and logistics platform serving multiple markets. We developed a scalable solution with real-time tracking, multi-vendor support, payment integration, and efficient routing algorithms that ensure fast and reliable deliveries.",
-    image: snoonuImage,
-    type: "Logistics"
-  },
-  {
     id: "Palplug",
     name: "Palplug",
-    description:
-      "A modern communication platform revolutionizing how teams collaborate and share information. We created a secure messaging system with end-to-end encryption, file sharing, video calls, and team management features that keep organizations connected.",
+    description: `Palplug is a next‑gen professional networking platform connecting talent, recruiters, and businesses worldwide.
+ Create rich profiles, share expertise, post jobs, and build meaningful connections — all with intuitive networking, real‑time messaging, and smart discovery tools.
+ Palplug empowers professionals and companies to grow, collaborate, and succeed in a modern, connected ecosystem.`,
     image: telegraphyImage,
     type: "Communication"
   },
@@ -74,7 +84,7 @@ const projects = [
     id: "Dillon",
     name: "Dillon",
     description:
-      "An innovative e-commerce platform that makes shopping fun and affordable. We built a mobile-first marketplace with personalized product discovery, social shopping features, and seamless checkout experiences that delight millions of users worldwide.",
+      "Dillon Gas is a next-gen e-commerce and delivery platform that connects businesses with customers seamlessly. It offers real-time rider tracking via maps, integrated digital wallets, and secure payment options. The result is faster deliveries, smooth transactions, and enhanced customer experience.",
     image: wishImage,
     type: "E-commerce"
   },
@@ -82,7 +92,7 @@ const projects = [
     id: "Low-Coder",
     name: "Low Coder",
     description:
-      "A next-generation code editor built for performance and collaboration. We developed a lightning-fast editor with real-time collaboration, AI-powered code assistance, and seamless Git integration that empowers developers to code more efficiently.",
+      "Low Coder is a modern low-code development platform that enables businesses to build applications quickly with minimal coding expertise. The platform provides drag-and-drop interfaces, automation tools, and multi-device integration. The result is faster app deployment, reduced development costs, and scalable digital solutions.",
     image: zedImage,
     type: "Developer Tools"
   }
@@ -129,7 +139,7 @@ export default function LatestProjects() {
           </span>
         </h2>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-6 items-start">
           {/* Left Side - Project List with Pagination */}
           <div className="flex flex-col bg-black/40 backdrop-blur-sm">
             <div className="space-y-0 flex-1 pt-4">
@@ -218,26 +228,26 @@ export default function LatestProjects() {
 
           {/* Right Side - Content with Text and Images */}
           <div className="flex flex-col bg-black/40 backdrop-blur-sm">
-            <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
+            <div className="flex flex-col lg:flex-row gap-6">
               {/* Text Content - Small text and button with more width */}
               <div className="flex-[1.5] space-y-4 pt-4">
                 <p className="text-sm md:text-base font-normal text-gray-300 leading-relaxed">
                   {projects[selectedProject].description}
                 </p>
-                <button className="w-full md:w-auto px-6 py-2.5 bg-transparent text-red-400 rounded-lg font-medium hover:bg-red-500/10 transition-all duration-300 text-sm">
+                <button className="w-full md:w-auto px-6 py-2.5 bg-transparent border border-red-500/60 text-red-400 rounded-lg font-medium hover:bg-red-500/10 hover:border-red-500 transition-all duration-300 text-sm">
                   View project
                 </button>
               </div>
 
-              {/* Images horizontally aligned with text - Made smaller */}
-              <div className="flex-shrink-0 w-full lg:w-auto pt-4">
+              {/* Images horizontally aligned with text - Made smaller, aligned to top */}
+              <div className="flex-shrink-0 w-full lg:w-auto self-start">
                 <div className="relative group">
                   <div className="rounded-xl overflow-hidden aspect-[3/4] relative w-full lg:w-[350px]">
                     <Image
                       src={projects[selectedProject].image}
                       alt={projects[selectedProject].name}
                       fill
-                      className="object-contain transition-transform duration-700 group-hover:scale-105"
+                      className="object-contain object-top transition-transform duration-700 group-hover:scale-105"
                       sizes="(max-width: 768px) 100vw, 350px"
                     />
                   </div>
