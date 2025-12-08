@@ -20,7 +20,7 @@ export default function Home() {
       <IndustryExpertise />
       {/* <WorkWithUs /> */}
       <AboutCompany />
-      <div className="relative z-[30] w-full" style={{ isolation: "isolate" }}>
+      <div className="relative z-[30] w-full" style={{ isolation: "isolate", position: "relative", marginTop: "0" }}>
         <ContactForm />
       </div>
       <Footer />

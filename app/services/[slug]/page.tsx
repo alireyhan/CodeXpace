@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ServiceHero from "@/components/services/ServiceHero";
+import ServiceDescription from "@/components/services/ServiceDescription";
 import ServiceCapabilities from "@/components/services/ServiceCapabilities";
 import ServiceFAQs from "@/components/services/ServiceFAQs";
 
@@ -89,6 +90,11 @@ const serviceData: Record<string, any> = {
       "Secure, scalable, and innovative mobile apps that deliver results.",
     intro:
       "Create engaging mobile experiences with native and cross-platform applications. We develop high-performance mobile apps that users love and businesses rely on.",
+    description: [
+      "CodeXpace has immense expertise in creating and deploying top-performing, feature-rich, and user-friendly mobile applications based on the unique requirements of businesses.",
+      "Through our proven expertise, we have you covered from design to development, launch, and marketing of simple to intricate mobile apps. Our experts supplement the customer's thought process along with their schemes guaranteeing successful project delivery.",
+      "So, with CodeXpace mobile apps you get flawless performance, robust security, and an enhanced user experience across platforms and devices."
+    ],
     whyChoose: [
       "Native & Cross-Platform",
       "User-Centric Design",
@@ -297,6 +303,12 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
         subtitle={service.subtitle}
         slug={params.slug}
       />
+      {service.description && (
+        <ServiceDescription
+          title={service.title}
+          description={service.description}
+        />
+      )}
       <ServiceCapabilities items={service.capabilities} />
       <ServiceFAQs />
       <Footer />

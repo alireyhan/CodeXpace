@@ -88,7 +88,7 @@ export default function IndustryExpertise() {
   }, []);
 
   return (
-    <section className="py-20 bg-black relative z-0 overflow-x-hidden" style={{ isolation: "isolate" }}>
+    <section className="py-20 bg-black relative z-0 overflow-x-hidden" style={{ isolation: "isolate", contain: "layout" }}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
           Where We Exceed{" "}
@@ -121,12 +121,8 @@ export default function IndustryExpertise() {
                       {industry.number}
                     </div>
                     <div
-                      className={`overflow-hidden aspect-video relative transition-all duration-700 ${
-                        isVisible
-                          ? "opacity-100 translate-x-0 translate-y-0"
-                          : `opacity-0 ${
-                              isEven ? "-translate-x-12" : "translate-x-12"
-                            } translate-y-8`
+                      className={`overflow-hidden aspect-video relative transition-opacity duration-700 ${
+                        isVisible ? "opacity-100" : "opacity-0"
                       }`}
                       style={{
                         width: "480px", // custom width
@@ -171,13 +167,12 @@ export default function IndustryExpertise() {
                   </div>
                 </div>
                 <div
-                  className={`flex-1 transition-all duration-700 ${
-                    isVisible
-                      ? "opacity-100 translate-x-0 translate-y-0"
-                      : `opacity-0 ${
-                          isEven ? "translate-x-12" : "-translate-x-12"
-                        } translate-y-8`
+                  className={`flex-1 transition-opacity duration-700 ${
+                    isVisible ? "opacity-100" : "opacity-0"
                   }`}
+                  style={{
+                    minHeight: "200px" // Prevent layout shift
+                  }}
                 >
                   <h3 className="text-3xl font-bold text-white mb-4">
                     {industry.title}
