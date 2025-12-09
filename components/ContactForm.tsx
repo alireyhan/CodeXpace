@@ -27,15 +27,20 @@ export default function ContactForm() {
 
   return (
     <section
-      id="contact"
-      className="py-20 bg-black relative min-h-[600px] w-full"
+      className="contact-form-section py-20 bg-black relative min-h-[600px] w-full"
       style={{
         display: 'block',
         visibility: 'visible',
         opacity: 1,
         position: 'relative',
-        zIndex: 10,
-        overflow: 'visible'
+        zIndex: 100,
+        overflow: 'visible',
+        width: '100%',
+        height: 'auto',
+        minHeight: '600px',
+        animation: 'none !important',
+        transition: 'none !important',
+        transform: 'none !important'
       }}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl relative w-full" style={{ position: 'relative', zIndex: 11 }}>
@@ -89,7 +94,7 @@ export default function ContactForm() {
                 href="https://www.facebook.com/share/1HDKEeNsrB/?mibextid=wwXIfr"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 bg-black/50 border border-red-500/30 rounded-full flex items-center justify-center hover:border-red-500/50 transition-colors backdrop-blur-sm"
+                className="w-8 h-8 bg-black/50 border border-red-500/30 rounded-full flex items-center justify-center backdrop-blur-sm"
               >
                 <svg
                   className="w-4 h-4"
@@ -104,7 +109,7 @@ export default function ContactForm() {
                 href="https://www.instagram.com/codexpaceofficial?igsh=cHd5bHhjODI4NjE5"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 bg-black/50 border border-red-500/30 rounded-full flex items-center justify-center hover:border-red-500/50 transition-colors backdrop-blur-sm"
+                className="w-8 h-8 bg-black/50 border border-red-500/30 rounded-full flex items-center justify-center backdrop-blur-sm"
               >
                 <svg
                   className="w-4 h-4"
@@ -134,7 +139,7 @@ export default function ContactForm() {
                 href="https://www.linkedin.com/company/codexpaceofficial"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 bg-black/50 border border-red-500/30 rounded-full flex items-center justify-center hover:border-red-500/50 transition-colors backdrop-blur-sm"
+                className="w-8 h-8 bg-black/50 border border-red-500/30 rounded-full flex items-center justify-center backdrop-blur-sm"
               >
                 <svg
                   className="w-4 h-4"
@@ -192,7 +197,7 @@ export default function ContactForm() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full bg-black/40 backdrop-blur-sm border border-red-500/30 rounded-lg px-4 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-red-500 transition-colors"
+                  className="w-full bg-black/40 backdrop-blur-sm border border-red-500/30 rounded-lg px-4 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-red-500"
                 />
               </div>
               <div>
@@ -203,7 +208,7 @@ export default function ContactForm() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full bg-black/40 backdrop-blur-sm border border-red-500/30 rounded-lg px-4 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-red-500 transition-colors"
+                  className="w-full bg-black/40 backdrop-blur-sm border border-red-500/30 rounded-lg px-4 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-red-500"
                 />
               </div>
               <div>
@@ -213,7 +218,7 @@ export default function ContactForm() {
                   placeholder="Phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full bg-black/40 backdrop-blur-sm border border-red-500/30 rounded-lg px-4 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-red-500 transition-colors"
+                  className="w-full bg-black/40 backdrop-blur-sm border border-red-500/30 rounded-lg px-4 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-red-500"
                 />
               </div>
               <div>
@@ -224,12 +229,12 @@ export default function ContactForm() {
                   onChange={handleChange}
                   required
                   rows={4}
-                  className="w-full bg-black/40 backdrop-blur-sm border border-red-500/30 rounded-lg px-4 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-red-500 transition-colors resize-none"
+                  className="w-full bg-black/40 backdrop-blur-sm border border-red-500/30 rounded-lg px-4 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-red-500 resize-none"
                 ></textarea>
               </div>
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white px-6 py-2.5 rounded-lg font-semibold text-sm transition-all shadow-lg shadow-red-500/20 hover:shadow-xl hover:shadow-red-500/30 hover:scale-105 transform flex items-center justify-center space-x-2"
+                className="w-full bg-gradient-to-r from-red-600 to-red-500 text-white px-6 py-2.5 rounded-lg font-semibold text-sm shadow-lg shadow-red-500/20 flex items-center justify-center space-x-2"
               >
                 <span>SUBMIT HERE</span>
                 <svg

@@ -11,7 +11,7 @@ import Footer from '@/components/Footer';
 
 export default function Home() {
   return (
-    <main className="bg-black relative" style={{ overflowX: 'hidden', overflowY: 'visible' }}>
+    <main className="bg-black relative" style={{ overflowX: 'hidden', overflowY: 'visible', minHeight: '100vh', height: 'auto', width: '100%' }}>
       <Header />
       <Hero />
       <TechStack />
@@ -20,7 +20,7 @@ export default function Home() {
       <IndustryExpertise />
       {/* <WorkWithUs /> */}
       <AboutCompany />
-      <div style={{ position: 'relative', zIndex: 10, overflow: 'visible' }}>
+      <div style={{ position: 'relative', zIndex: 100, overflow: 'visible', width: '100%' }}>
         <ContactForm />
       </div>
       <Footer />
