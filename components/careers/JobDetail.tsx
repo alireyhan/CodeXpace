@@ -3,137 +3,81 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import ApplyForm from './ApplyForm';
+import { API_ENDPOINTS } from '@/lib/api';
 
 interface JobDetail {
+  id: number;
   title: string;
   department: string;
   number_of_openings: number;
   job_type: string;
   location: string;
-  salary_range: string;
-  working_days: string;
-  application_deadline: string;
-  experience_required: string;
+  salary_range?: string;
+  working_days?: string;
+  application_deadline?: string;
+  experience_required?: string;
   description: string;
-  responsibilities: string;
-  requirements: string;
-  nice_to_have: string;
-  benefits: string;
+  responsibilities?: string;
+  requirements?: string;
+  nice_to_have?: string;
+  benefits?: string;
   is_active: boolean;
 }
 
-const jobDetails: Record<string, JobDetail> = {
-  'senior-software-engineer': {
-    title: 'Senior Software Engineer - (Full-Time)',
-    department: 'Web Development',
-    number_of_openings: 3,
-    job_type: 'Full-Time',
-    location: 'Warsaw, Poland',
-    salary_range: '$80k to $100k (Based on your experience)',
-    working_days: 'Weekly 05 days. Sunday To Thursday. 09 AM to 06 PM. (Launch Break 01 Hour)',
-    application_deadline: '2023-10-10',
-    experience_required: '6+ Years',
-    description: "We're looking for an eager and knowledgeable WordPress Developer to join our technical team in Warsaw, Poland. You'll be expected to utilize bleeding-edge technology and robust techniques. You should be an excellent communicator and comfortable managing multiple tasks. you also need to be a team player and have a problem-solving aptitude. Working quickly and creatively should come naturally to you, as well as being an innovative problem-solver who takes pride in producing logical, simple, and effective solutions to what are often very new and complex issues.",
-    responsibilities: "Refactor current code to service-oriented architecture.\nCollaborate with a unique background of engineering, product, and operations team members to deliver the best solution for our customers.\nSolve technical problems that few have solved before – no one else helps local businesses the way we do.\nParticipate in the decision-making progress – we want you to speak up.\nMentor your team members to share your passion for software, your appreciation for the engineering field, and your respect for the craft of software development.\nTake on the challenge of making what you build higher quality, faster, and more scalable.\nParticipate in on-call rotation.",
-    requirements: "6+ years of previous professional software development experience.\nPrevious backend restful API development experience.\nStrong experience in a programming language like Python, PHP, NodeJS, Java, etc.\nCan adapt to new or different programming languages.\nExperience integrating a broad variety of technologies via API consumption/production.\nAbility to collaborate with a unique background of engineering, product, and operations team members to deliver the best solution for our customers.\nDeep knowledge and a passion for coding standards and following proven design patterns.\nSolid foundation in data structures and algorithms.\nExperience with Agile, working in sprints, and participating in Agile ceremonies.",
-    nice_to_have: "Experience with AWS.\nExperience building CI/CD and server/deployment automation solutions.\nExperience with open-source puppet, infrastructure-as-code.\nPassion for technology.\nYou have high standards and want to make a difference with your work.\nYou are always trying to improve.",
-    benefits: "Company-wide 401(k) plan.\nLife & disability insurance offered.\nCompetitive compensation—salary, bonus, equity.\nMedical, dental, and vision; flex spending account.\nFlexible paid time off & sick leave.",
-    is_active: true,
-  },
-  'customer-success-manager': {
-    title: 'Customer Success Manager',
-    department: 'Customer Success',
-    number_of_openings: 2,
-    job_type: 'Full-Time',
-    location: 'Tokyo',
-    salary_range: '$60k to $80k (Based on your experience)',
-    working_days: 'Weekly 05 days. Monday To Friday. 09 AM to 06 PM. (Launch Break 01 Hour)',
-    application_deadline: '2024-12-31',
-    experience_required: '3+ Years',
-    description: "We're looking for a customer success manager to join our team.",
-    responsibilities: "Build and maintain strong customer relationships.\nEnsure customer satisfaction and retention.\nIdentify upsell and expansion opportunities.\nCollaborate with product and engineering teams.",
-    requirements: "3+ years of experience in customer success or account management.\nStrong communication and relationship-building skills.\nExperience with SaaS products.\nAbility to work in a fast-paced environment.",
-    nice_to_have: "Experience with CRM systems.\nTechnical background.\nMultilingual capabilities.",
-    benefits: "Competitive compensation.\nHealth insurance.\nFlexible work arrangements.\nProfessional development opportunities.",
-    is_active: true,
-  },
-  'product-designer': {
-    title: 'Product Designer',
-    department: 'Design',
-    number_of_openings: 1,
-    job_type: 'Full-Time',
-    location: 'Remote',
-    salary_range: '$70k to $90k (Based on your experience)',
-    working_days: 'Weekly 05 days. Monday To Friday. 09 AM to 06 PM. (Launch Break 01 Hour)',
-    application_deadline: '2024-12-31',
-    experience_required: '3+ Years',
-    description: "We're looking for a mid-level product designer to join our team.",
-    responsibilities: "Create user-centered design solutions.\nCollaborate with product managers and engineers.\nConduct user research and usability testing.\nDevelop design systems and guidelines.",
-    requirements: "3+ years of experience in product design.\nStrong portfolio showcasing UX/UI design skills.\nProficiency in design tools (Figma, Sketch, etc.).\nUnderstanding of user research and testing methodologies.",
-    nice_to_have: "Experience with prototyping tools.\nAnimation and motion design skills.\nFront-end development knowledge.",
-    benefits: "Design tools subscription.\nConference and workshop attendance.\nCreative freedom.\nCompetitive benefits package.",
-    is_active: true,
-  },
-  'backend-developer': {
-    title: 'Backend Developer',
-    department: 'Engineering',
-    number_of_openings: 2,
-    job_type: 'Part-time',
-    location: 'In House',
-    salary_range: '$50k to $70k (Based on your experience)',
-    working_days: 'Weekly 03 days. Flexible schedule.',
-    application_deadline: '2024-12-31',
-    experience_required: '4+ Years',
-    description: "We're looking for an experienced backend developer to join our team.",
-    responsibilities: "Develop and maintain backend services.\nDesign and implement APIs.\nOptimize database performance.\nEnsure system reliability and scalability.",
-    requirements: "4+ years of experience in backend development.\nStrong knowledge of server-side technologies.\nExperience with databases and APIs.\nUnderstanding of security best practices.",
-    nice_to_have: "Experience with microservices architecture.\nCloud platform certifications.\nOpen source contributions.",
-    benefits: "Flexible working hours.\nRemote work options.\nLearning and development budget.\nHealth and wellness programs.",
-    is_active: true,
-  },
-  'engineering-manager': {
-    title: 'Engineering Manager',
-    department: 'Engineering',
-    number_of_openings: 1,
-    job_type: 'Full-Time',
-    location: 'New York',
-    salary_range: '$120k to $150k (Based on your experience)',
-    working_days: 'Weekly 05 days. Monday To Friday. 09 AM to 06 PM. (Launch Break 01 Hour)',
-    application_deadline: '2024-12-31',
-    experience_required: '7+ Years',
-    description: "We're looking for an engineering manager to join our team.",
-    responsibilities: "Lead and manage engineering teams.\nDrive technical strategy and roadmap.\nFoster a culture of innovation and excellence.\nCollaborate with stakeholders across the organization.",
-    requirements: "7+ years of experience in software engineering.\n3+ years of experience in engineering management.\nStrong leadership and team-building skills.\nExperience with agile methodologies.",
-    nice_to_have: "MBA or management certification.\nExperience scaling engineering teams.\nPublic speaking and conference experience.",
-    benefits: "Executive compensation package.\nEquity participation.\nComprehensive health benefits.\nLeadership development programs.",
-    is_active: true,
-  },
-  'content-writer': {
-    title: 'Content Writer',
-    department: 'Marketing',
-    number_of_openings: 1,
-    job_type: 'Full-Time',
-    location: 'Remote',
-    salary_range: '$40k to $60k (Based on your experience)',
-    working_days: 'Weekly 05 days. Monday To Friday. 09 AM to 06 PM. (Launch Break 01 Hour)',
-    application_deadline: '2024-12-31',
-    experience_required: '2+ Years',
-    description: "We're looking for a content writer to join our team.",
-    responsibilities: "Create engaging content for various channels.\nDevelop content strategies and editorial calendars.\nCollaborate with marketing and product teams.\nEnsure content quality and consistency.",
-    requirements: "2+ years of experience in content writing.\nStrong writing and editing skills.\nUnderstanding of SEO best practices.\nAbility to write for technical and non-technical audiences.",
-    nice_to_have: "Experience with content management systems.\nVideo script writing.\nSocial media management.",
-    benefits: "Content creation tools.\nWriting workshops and courses.\nCreative writing time.\nCompetitive benefits package.",
-    is_active: true,
-  },
-};
-
 export default function JobDetail({ jobId }: { jobId: string }) {
+  const [job, setJob] = useState<JobDetail | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [showApplyForm, setShowApplyForm] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const job = jobDetails[jobId] || jobDetails['senior-software-engineer'];
+
+  // Fetch job details from API
+  useEffect(() => {
+    const fetchJob = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        console.log('Fetching job with ID:', jobId);
+        console.log('API Endpoint:', API_ENDPOINTS.JOB_POSTINGS);
+        
+        const response = await fetch(API_ENDPOINTS.JOB_POSTINGS);
+        console.log('Response status:', response.status);
+        
+        if (!response.ok) {
+          throw new Error(`Failed to fetch job details: ${response.status} ${response.statusText}`);
+        }
+        
+        const jobs = await response.json();
+        console.log('Fetched jobs:', jobs);
+        console.log('Looking for job ID:', jobId);
+        
+        const foundJob = jobs.find((j: JobDetail) => j.id.toString() === jobId);
+        console.log('Found job:', foundJob);
+        
+        if (foundJob) {
+          setJob(foundJob);
+        } else {
+          setError(`Job with ID ${jobId} not found. Available jobs: ${jobs.map((j: JobDetail) => j.id).join(', ')}`);
+        }
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : 'An error occurred';
+        setError(errorMessage);
+        console.error('Error fetching job:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJob();
+  }, [jobId]);
 
   useEffect(() => {
+    // Set visible immediately when job is loaded
+    if (job) {
+      setIsVisible(true);
+    }
+    
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -152,17 +96,54 @@ export default function JobDetail({ jobId }: { jobId: string }) {
         observer.unobserve(ref.current);
       }
     };
-  }, []);
+  }, [job]);
 
   // Parse multiline strings into arrays
-  const parseMultiline = (text: string) => {
+  const parseMultiline = (text?: string) => {
+    if (!text) return [];
     return text.split('\n').filter(line => line.trim() !== '');
   };
 
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString?: string) => {
+    if (!dateString) return 'Not specified';
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   };
+
+  if (loading) {
+    return (
+      <section className="py-20 bg-black relative">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+          <div className="text-center py-12">
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-500"></div>
+            <p className="text-gray-400 mt-4">Loading job details...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error || (!loading && !job)) {
+    return (
+      <section className="py-20 bg-black relative min-h-screen">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+          <div className="bg-red-500/20 border border-red-500/50 rounded-lg p-8 text-center">
+            <p className="text-red-400 text-lg mb-4">{error || 'Job not found'}</p>
+            <p className="text-gray-400 text-sm mb-6">Job ID: {jobId}</p>
+            <Link
+              href="/careers"
+              className="inline-flex items-center space-x-2 text-red-400 hover:text-red-300 transition-colors"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              <span>Back to Careers</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-20 bg-black relative">
@@ -171,9 +152,7 @@ export default function JobDetail({ jobId }: { jobId: string }) {
           {/* Back Button */}
           <Link
             href="/careers"
-            className={`inline-flex items-center space-x-2 text-red-400 hover:text-red-300 transition-colors duration-300 mb-8 ${
-              isVisible ? 'opacity-100' : 'opacity-0'
-            }`}
+            className="inline-flex items-center space-x-2 text-red-400 hover:text-red-300 transition-colors duration-300 mb-8"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -183,9 +162,7 @@ export default function JobDetail({ jobId }: { jobId: string }) {
 
           {/* Job Header */}
           <div
-            className={`bg-black/60 backdrop-blur-xl border border-red-500/30 rounded-2xl p-8 transition-all duration-700 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
+            className="bg-black/60 backdrop-blur-xl border border-red-500/30 rounded-2xl p-8 transition-all duration-700 opacity-100"
             style={{
               boxShadow: '0 8px 32px rgba(220, 38, 38, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.05)'
             }}
@@ -260,7 +237,7 @@ export default function JobDetail({ jobId }: { jobId: string }) {
                 </svg>
                 <div>
                   <p className="text-xs text-gray-400 uppercase tracking-wide">Working Days</p>
-                  <p className="text-white text-sm">{job.working_days}</p>
+                  <p className="text-white text-sm">{job.working_days || 'Not specified'}</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
@@ -277,16 +254,14 @@ export default function JobDetail({ jobId }: { jobId: string }) {
 
           {/* Responsibilities */}
           <div
-            className={`bg-black/60 backdrop-blur-xl border border-red-500/30 rounded-2xl p-8 transition-all duration-700 delay-200 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
+            className="bg-black/60 backdrop-blur-xl border border-red-500/30 rounded-2xl p-8 transition-all duration-700 delay-200"
             style={{
               boxShadow: '0 8px 32px rgba(220, 38, 38, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.05)'
             }}
           >
             <h2 className="text-2xl font-bold text-white mb-6">Responsibilities</h2>
             <ul className="space-y-3">
-              {parseMultiline(job.responsibilities).map((resp: string, index: number) => (
+              {parseMultiline(job.responsibilities || '').map((resp: string, index: number) => (
                 <li key={index} className="flex items-start space-x-3">
                   <div className="w-1.5 h-1.5 bg-red-500 rounded-full flex-shrink-0 mt-2.5"></div>
                   <p className="text-base text-gray-300 leading-relaxed">{resp}</p>
@@ -297,16 +272,14 @@ export default function JobDetail({ jobId }: { jobId: string }) {
 
           {/* Requirements */}
           <div
-            className={`bg-black/60 backdrop-blur-xl border border-red-500/30 rounded-2xl p-8 transition-all duration-700 delay-300 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
+            className="bg-black/60 backdrop-blur-xl border border-red-500/30 rounded-2xl p-8 transition-all duration-700 delay-300"
             style={{
               boxShadow: '0 8px 32px rgba(220, 38, 38, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.05)'
             }}
           >
             <h2 className="text-2xl font-bold text-white mb-6">Requirements</h2>
             <ul className="space-y-3">
-              {parseMultiline(job.requirements).map((req: string, index: number) => (
+              {parseMultiline(job.requirements || '').map((req: string, index: number) => (
                 <li key={index} className="flex items-start space-x-3">
                   <div className="w-1.5 h-1.5 bg-red-500 rounded-full flex-shrink-0 mt-2.5"></div>
                   <p className="text-base text-gray-300 leading-relaxed">{req}</p>
@@ -318,16 +291,14 @@ export default function JobDetail({ jobId }: { jobId: string }) {
           {/* Nice to Have */}
           {job.nice_to_have && (
             <div
-              className={`bg-black/60 backdrop-blur-xl border border-red-500/30 rounded-2xl p-8 transition-all duration-700 delay-400 ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-              }`}
+              className="bg-black/60 backdrop-blur-xl border border-red-500/30 rounded-2xl p-8 transition-all duration-700 delay-400"
               style={{
                 boxShadow: '0 8px 32px rgba(220, 38, 38, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.05)'
               }}
             >
               <h2 className="text-2xl font-bold text-white mb-6">Nice to Have</h2>
               <ul className="space-y-3">
-                {parseMultiline(job.nice_to_have).map((item: string, index: number) => (
+                {parseMultiline(job.nice_to_have || '').map((item: string, index: number) => (
                   <li key={index} className="flex items-start space-x-3">
                     <div className="w-1.5 h-1.5 bg-red-500 rounded-full flex-shrink-0 mt-2.5"></div>
                     <p className="text-base text-gray-300 leading-relaxed">{item}</p>
@@ -340,16 +311,14 @@ export default function JobDetail({ jobId }: { jobId: string }) {
           {/* Benefits */}
           {job.benefits && (
             <div
-              className={`bg-black/60 backdrop-blur-xl border border-red-500/30 rounded-2xl p-8 transition-all duration-700 delay-500 ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-              }`}
+              className="bg-black/60 backdrop-blur-xl border border-red-500/30 rounded-2xl p-8 transition-all duration-700 delay-500"
               style={{
                 boxShadow: '0 8px 32px rgba(220, 38, 38, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.05)'
               }}
             >
               <h2 className="text-2xl font-bold text-white mb-6">Benefits</h2>
               <ul className="space-y-3">
-                {parseMultiline(job.benefits).map((benefit: string, index: number) => (
+                {parseMultiline(job.benefits || '').map((benefit: string, index: number) => (
                   <li key={index} className="flex items-start space-x-3">
                     <div className="w-1.5 h-1.5 bg-red-500 rounded-full flex-shrink-0 mt-2.5"></div>
                     <p className="text-base text-gray-300 leading-relaxed">{benefit}</p>
@@ -360,11 +329,7 @@ export default function JobDetail({ jobId }: { jobId: string }) {
           )}
 
           {/* Apply Button */}
-          <div
-            className={`transition-all duration-700 delay-600 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-          >
+          <div className="transition-all duration-700 delay-600">
             <button
               onClick={() => setShowApplyForm(!showApplyForm)}
               className="inline-flex items-center space-x-2 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white px-8 py-3 rounded-lg font-semibold text-sm md:text-base transition-all shadow-lg shadow-red-500/20 hover:shadow-xl hover:shadow-red-500/30 hover:scale-105 transform uppercase tracking-wide w-full md:w-auto justify-center"

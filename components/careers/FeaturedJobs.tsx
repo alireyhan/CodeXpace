@@ -2,65 +2,48 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { API_ENDPOINTS } from "@/lib/api";
 
 interface Job {
-  id: string;
+  id: number;
   title: string;
   description: string;
   location: string;
-  employmentType: "Full-time" | "Part-time";
+  job_type: string;
+  department: string;
+  salary_range?: string;
+  experience_required?: string;
+  is_active: boolean;
 }
 
-const jobs: Job[] = [
-  {
-    id: "senior-software-engineer",
-    title: "Senior Software Engineer",
-    description: "We're looking for an engineering manager to join our team.",
-    location: "Remote",
-    employmentType: "Full-time"
-  },
-  {
-    id: "customer-success-manager",
-    title: "Customer Success Manager",
-    description: "We're looking for a engineering manager to join our team.",
-    location: "Tokyo",
-    employmentType: "Full-time"
-  },
-  {
-    id: "product-designer",
-    title: "Product Designer",
-    description:
-      "We're looking for a mid-level product designer to join our team.",
-    location: "Remote",
-    employmentType: "Full-time"
-  },
-  {
-    id: "backend-developer",
-    title: "Backend Developer",
-    description:
-      "We're looking for an experienced backend developer to join our team.",
-    location: "In House",
-    employmentType: "Part-time"
-  },
-  {
-    id: "engineering-manager",
-    title: "Engineering Manager",
-    description: "We're looking for a engineering manager to join our team.",
-    location: "New York",
-    employmentType: "Full-time"
-  },
-  {
-    id: "content-writer",
-    title: "Content Writer",
-    description: "We're looking for a content writer to join our team.",
-    location: "Remote",
-    employmentType: "Full-time"
-  }
-];
-
 export default function FeaturedJobs() {
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [visibleCards, setVisibleCards] = useState<Set<number>>(new Set());
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Fetch jobs from API
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(API_ENDPOINTS.JOB_POSTINGS);
+        if (!response.ok) {
+          throw new Error('Failed to fetch jobs');
+        }
+        const data = await response.json();
+        setJobs(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'An error occurred');
+        console.error('Error fetching jobs:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJobs();
+  }, []);
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
@@ -89,7 +72,7 @@ export default function FeaturedJobs() {
     return () => {
       observers.forEach((observer) => observer.disconnect());
     };
-  }, []);
+  }, [jobs]);
 
   return (
     <section className="py-20 bg-black relative">
@@ -100,6 +83,25 @@ export default function FeaturedJobs() {
             Jobs
           </span>
         </h2>
+
+        {loading && (
+          <div className="text-center py-12">
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-500"></div>
+            <p className="text-gray-400 mt-4">Loading jobs...</p>
+          </div>
+        )}
+
+        {error && (
+          <div className="bg-red-500/20 border border-red-500/50 rounded-lg p-4 text-center">
+            <p className="text-red-400">{error}</p>
+          </div>
+        )}
+
+        {!loading && !error && jobs.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-gray-400">No job openings available at the moment.</p>
+          </div>
+        )}
 
         <div className="space-y-4">
           {jobs.map((job, index) => (
@@ -168,7 +170,7 @@ export default function FeaturedJobs() {
                         />
                       </svg>
                       <span className="text-white text-sm font-medium">
-                        {job.employmentType}
+                        {job.job_type}
                       </span>
                     </div>
                   </div>

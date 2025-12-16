@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import { API_ENDPOINTS } from '@/lib/api';
 
 interface ApplyFormProps {
   jobTitle: string;
@@ -21,6 +22,10 @@ export default function ApplyForm({ jobTitle }: ApplyFormProps) {
   const [resumeFileName, setResumeFileName] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: "success" | "error" | null;
+    message: string;
+  }>({ type: null, message: "" });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -40,34 +45,73 @@ export default function ApplyForm({ jobTitle }: ApplyFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
     
-    // Here you would normally submit to the API
-    // For now, we'll just log the data
-    console.log('Form Data:', formData);
-    console.log('Resume:', resume);
-    
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
-      alert('Application submitted successfully! (This is a UI demo - API integration pending)');
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        address: '',
-        job_posting: jobTitle,
-        source: '',
-        expected_salary: '',
-        message: '',
+    if (!resume) {
+      setSubmitStatus({
+        type: "error",
+        message: "Please upload your resume."
       });
-      setResume(null);
-      setResumeFileName('');
-      if (fileInputRef.current) {
-        fileInputRef.current.value = '';
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: "" });
+
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('phone', formData.phone);
+      formDataToSend.append('address', formData.address);
+      formDataToSend.append('job_posting', formData.job_posting);
+      formDataToSend.append('source', formData.source);
+      formDataToSend.append('expected_salary', formData.expected_salary);
+      formDataToSend.append('message', formData.message);
+      formDataToSend.append('resume', resume);
+
+      const response = await fetch(API_ENDPOINTS.JOB_APPLICATION, {
+        method: 'POST',
+        body: formDataToSend,
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus({
+          type: "success",
+          message: data.message || "Application submitted successfully!",
+        });
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          address: '',
+          job_posting: jobTitle,
+          source: '',
+          expected_salary: '',
+          message: '',
+        });
+        setResume(null);
+        setResumeFileName('');
+        if (fileInputRef.current) {
+          fileInputRef.current.value = '';
+        }
+      } else {
+        setSubmitStatus({
+          type: "error",
+          message: data.message || "Failed to submit application. Please try again.",
+        });
       }
-    }, 1000);
+    } catch (error) {
+      setSubmitStatus({
+        type: "error",
+        message: "An error occurred. Please try again later.",
+      });
+      console.error("Error submitting application:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleFileClick = () => {
@@ -79,6 +123,18 @@ export default function ApplyForm({ jobTitle }: ApplyFormProps) {
       <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
         Apply for <span className="text-red-400">{jobTitle}</span>
       </h2>
+
+      {submitStatus.type && (
+        <div
+          className={`p-4 rounded-lg text-sm mb-6 ${
+            submitStatus.type === "success"
+              ? "bg-green-500/20 border border-green-500/50 text-green-400"
+              : "bg-red-500/20 border border-red-500/50 text-red-400"
+          }`}
+        >
+          {submitStatus.message}
+        </div>
+      )}
       
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Name */}
