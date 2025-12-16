@@ -145,11 +145,6 @@ export default function JobDetail({ jobId }: { jobId: string }) {
     );
   }
 
-  // TypeScript guard: ensure job is not null
-  if (!job) {
-    return null;
-  }
-
   return (
     <section className="py-20 bg-black relative">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
