@@ -177,7 +177,7 @@ export default function Header() {
             >
               Case Studies
             </Link> */}
-            {/* <Link
+            <Link
               href="/careers"
               className={`font-semibold text-sm transition-colors ${
                 isActive("/careers")
@@ -186,7 +186,7 @@ export default function Header() {
               }`}
             >
               Careers
-            </Link> */}
+            </Link>
           </div>
 
           {/* CTA Button */}
